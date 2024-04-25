@@ -21,16 +21,6 @@ describe('Account Class tests: ', () => {
   });
 
   describe('Account balance mutation tests: ', () => {
-    // let testAccount;
-
-    // beforeEach(() => {
-    //   testAccount = new Account();
-    // });
-
-    // afterEach(() => {
-    //   testAccount = null;
-    // });
-
     it('should add 100 to the balance when addFunds is called', () => {
       // Arrange
       const arg = 100;
@@ -94,6 +84,69 @@ describe('Account Class tests: ', () => {
       testAccount.withdrawFunds(withdrawAmt);
       // Assert
       expect(testAccount.getBalance()).toBe(expected);
+    });
+  });
+
+  describe('Account statements record tests: ', () => {
+    it('should record transactions when adding funds', () => {
+      // Arrange
+      const date = new Date().toLocaleDateString();
+      const expected = [
+        { date: date, type: 'debit', amount: 200, balance: 200 },
+      ];
+      const testAccount = new Account();
+      // Act
+      testAccount.addFunds(200);
+      // Assert
+      expect(testAccount.getStatements()).toEqual(expected);
+    });
+
+    it('should record transactions when removing funds', () => {
+      // Arrange
+      const date = new Date().toLocaleDateString();
+      const expected = [
+        { date: date, type: 'credit', amount: 200, balance: 300 },
+      ];
+      const testAccount = new Account(500);
+      // Act
+      testAccount.withdrawFunds(200);
+      // Assert
+      expect(testAccount.getStatements()).toEqual(expected);
+    });
+
+    it('should  be able to record multiple transactions', () => {
+      // Arrange
+      const date = new Date().toLocaleDateString();
+      const expected = [
+        { date: date, type: 'debit', amount: 1000, balance: 1000 },
+        { date: date, type: 'credit', amount: 300, balance: 700 },
+        { date: date, type: 'credit', amount: 300, balance: 400 },
+      ];
+      const testAccount = new Account();
+      // Act
+      testAccount.addFunds(1000);
+      testAccount.withdrawFunds(300);
+      testAccount.withdrawFunds(300);
+      // Assert
+      expect(testAccount.getStatements()).toEqual(expected);
+    });
+
+    it('should not record unsuccessfully transactions', () => {
+      // Arrange
+      const date = new Date().toLocaleDateString();
+      const expected = [
+        { date: date, type: 'debit', amount: 500, balance: 500 },
+        { date: date, type: 'credit', amount: 300, balance: 200 },
+        { date: date, type: 'credit', amount: 100, balance: 100 },
+      ];
+      const testAccount = new Account();
+      // Act
+      testAccount.addFunds(500);
+      testAccount.withdrawFunds(300);
+      testAccount.withdrawFunds(500);
+      testAccount.withdrawFunds(100);
+      // Assert
+      expect(testAccount.getStatements()).toEqual(expected);
     });
   });
 });
