@@ -9,16 +9,28 @@ export default class Account {
   getBalance = () => this.#balance;
 
   addFunds = amt => {
-    if (typeof amt === 'number') {
-      this.#balance += amt;
-      this.#addStatement(amt, 'debit');
+    if (typeof amt !== 'number') {
+      this.#userActionFeedback('invalid amount, please try again');
+      return;
     }
+    this.#balance += amt;
+    this.#userActionFeedback(
+      `£${amt.toFixed(2)} has been added to your account`
+    );
+    this.#addStatement(amt, 'debit');
   };
 
   withdrawFunds = amt => {
-    if (typeof amt === 'number' && amt <= this.#balance) {
+    if (typeof amt === 'number' && amt <= this.#balance && amt > 0) {
       this.#balance -= amt;
+      this.#userActionFeedback(
+        `£${amt.toFixed(2)} has been withdrawn from your account`
+      );
       this.#addStatement(amt, 'credit');
+    } else if (amt > this.#balance) {
+      this.#userActionFeedback(`Insufficient Funds`);
+    } else {
+      this.#userActionFeedback(`Invalid amount to withdraw`);
     }
   };
 
@@ -29,4 +41,8 @@ export default class Account {
   };
 
   getStatements = () => this.#statements;
+
+  #userActionFeedback = message => {
+    console.log(message);
+  };
 }

@@ -21,6 +21,16 @@ describe('Account Class tests: ', () => {
   });
 
   describe('Account balance mutation tests: ', () => {
+    let consoleSpy;
+
+    beforeEach(() => {
+      consoleSpy = spyOn(console, 'log');
+    });
+
+    afterEach(() => {
+      consoleSpy.calls.reset();
+    });
+
     it('should add 100 to the balance when addFunds is called', () => {
       // Arrange
       const arg = 100;
@@ -30,6 +40,17 @@ describe('Account Class tests: ', () => {
       testAccount.addFunds(arg);
       // Assert
       expect(testAccount.getBalance()).toBe(expected);
+    });
+
+    it('should log a message to the console when funds are added to the account', () => {
+      // Arrange
+      const amount = 100;
+      const expected = `£${amount.toFixed(2)} has been added to your account`;
+      const testAccount = new Account();
+      // Act
+      testAccount.addFunds(amount);
+      // Assert
+      expect(consoleSpy).toHaveBeenCalledWith(expected);
     });
 
     it('should not be possible to add a non-numerical argument passed into addFunds to the balance', () => {
@@ -43,12 +64,47 @@ describe('Account Class tests: ', () => {
       expect(testAccount.getBalance()).toBe(expected);
     });
 
+    it('should give the user feedback when trying to add a non-numerical amount', () => {
+      // Arrange
+      const arg = '100';
+      const expected = 'invalid amount, please try again';
+      const testAccount = new Account();
+      // Act
+      testAccount.addFunds(arg);
+      // Assert
+      expect(consoleSpy).toHaveBeenCalledWith(expected);
+    });
+
     it('should remove 100 from the balance when withdrawFunds is called', () => {
       // Arrange
       const testAccount = new Account(200);
       const expected = 50;
       // Act
       testAccount.withdrawFunds(150);
+      // Assert
+      expect(testAccount.getBalance()).toBe(expected);
+    });
+
+    it('should log a message when removing funds from the account', () => {
+      // Arrange
+      const testAccount = new Account(200);
+      const withdrawAmt = 150;
+      const expected = `£${withdrawAmt.toFixed(
+        2
+      )} has been withdrawn from your account`;
+      // Act
+      testAccount.withdrawFunds(withdrawAmt);
+      // Assert
+      expect(consoleSpy).toHaveBeenCalledWith(expected);
+    });
+
+    it('should not be possible to withdraw with a negative number', () => {
+      // Arrange
+      const arg = -100;
+      const expected = 200;
+      const testAccount = new Account(200);
+      // Act
+      testAccount.withdrawFunds(arg);
       // Assert
       expect(testAccount.getBalance()).toBe(expected);
     });
@@ -84,6 +140,28 @@ describe('Account Class tests: ', () => {
       testAccount.withdrawFunds(withdrawAmt);
       // Assert
       expect(testAccount.getBalance()).toBe(expected);
+    });
+
+    it('should give the user feedback if withdraw was unsuccessful if the amount to withdraw is greater then the balance', () => {
+      // Arrange
+      const testAccount = new Account();
+      const withdrawAmt = 150;
+      const expected = `Insufficient Funds`;
+      // Act
+      testAccount.withdrawFunds(withdrawAmt);
+      // Assert
+      expect(consoleSpy).toHaveBeenCalledWith(expected);
+    });
+
+    it('should give the user feedback if withdraw was unsuccessful if the amount was not valid', () => {
+      // Arrange
+      const testAccount = new Account();
+      const withdrawAmt = ' ';
+      const expected = `Invalid amount to withdraw`;
+      // Act
+      testAccount.withdrawFunds(withdrawAmt);
+      // Assert
+      expect(consoleSpy).toHaveBeenCalledWith(expected);
     });
   });
 
