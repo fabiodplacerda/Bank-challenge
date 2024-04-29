@@ -22,7 +22,7 @@ export default class Account {
 
   withdrawFunds = amt => {
     const validAmount = this.#checkWithdrawValidAmount(amt);
-    if (!validAmount && typeof amt !== 'number') {
+    if (!validAmount && (typeof amt !== 'number' || amt < 0)) {
       this.#userActionFeedback(`Invalid amount to withdraw`);
     } else if (!validAmount) {
       this.#userActionFeedback(`Insufficient Funds`);
@@ -43,7 +43,7 @@ export default class Account {
   };
 
   #addStatement = (amount, type) => {
-    const date = new Date().toLocaleDateString();
+    const date = new Date().toLocaleDateString('en-GB');
     const statement = { date: date, type, amount, balance: this.#balance };
     this.#statements.push(statement);
   };
