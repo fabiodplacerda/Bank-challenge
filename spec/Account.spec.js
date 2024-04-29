@@ -75,7 +75,7 @@ describe('Account Class tests: ', () => {
       expect(consoleSpy).toHaveBeenCalledWith(expected);
     });
 
-    it('should remove 100 from the balance when withdrawFunds is called', () => {
+    it('should remove 150 from the balance when withdrawFunds is called', () => {
       // Arrange
       const testAccount = new Account(200);
       const expected = 50;
@@ -120,7 +120,7 @@ describe('Account Class tests: ', () => {
       expect(testAccount.getBalance()).toBe(expected);
     });
 
-    it('should no be able to remove funds if the amount requested is more then the current balance', () => {
+    it('should not be able to remove funds if the amount requested is more then the current balance', () => {
       // Arrange
       const testAccount = new Account(200);
       const expected = 200;
@@ -131,7 +131,7 @@ describe('Account Class tests: ', () => {
       expect(testAccount.getBalance()).toBe(expected);
     });
 
-    it('should no be able to remove funds if the amount requested is sames as the current balance', () => {
+    it('should be able to remove funds if the amount requested is the same as the current balance', () => {
       // Arrange
       const testAccount = new Account(300);
       const expected = 0;
@@ -142,7 +142,7 @@ describe('Account Class tests: ', () => {
       expect(testAccount.getBalance()).toBe(expected);
     });
 
-    it('should give the user feedback if withdraw was unsuccessful if the amount to withdraw is greater then the balance', () => {
+    it('should give the user feedback if withdraw was unsuccessful, reason - the amount to withdraw is greater then the balance', () => {
       // Arrange
       const testAccount = new Account();
       const withdrawAmt = 150;
@@ -153,7 +153,7 @@ describe('Account Class tests: ', () => {
       expect(consoleSpy).toHaveBeenCalledWith(expected);
     });
 
-    it('should give the user feedback if withdraw was unsuccessful if the amount was not valid', () => {
+    it('should give the user feedback if withdraw was unsuccessful, reason - the amount was not valid', () => {
       // Arrange
       const testAccount = new Account();
       const withdrawAmt = ' ';
