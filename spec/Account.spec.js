@@ -166,9 +166,12 @@ describe('Account Class tests: ', () => {
   });
 
   describe('Account statements record tests: ', () => {
+    let date;
+    beforeEach(() => {
+      date = new Date().toLocaleDateString('en-GB');
+    });
     it('should record transactions when adding funds', () => {
       // Arrange
-      const date = new Date().toLocaleDateString();
       const expected = [
         { date: date, type: 'debit', amount: 200, balance: 200 },
       ];
@@ -181,7 +184,6 @@ describe('Account Class tests: ', () => {
 
     it('should record transactions when removing funds', () => {
       // Arrange
-      const date = new Date().toLocaleDateString();
       const expected = [
         { date: date, type: 'credit', amount: 200, balance: 300 },
       ];
@@ -194,7 +196,6 @@ describe('Account Class tests: ', () => {
 
     it('should  be able to record multiple transactions', () => {
       // Arrange
-      const date = new Date().toLocaleDateString();
       const expected = [
         { date: date, type: 'debit', amount: 1000, balance: 1000 },
         { date: date, type: 'credit', amount: 300, balance: 700 },
@@ -211,7 +212,6 @@ describe('Account Class tests: ', () => {
 
     it('should not record unsuccessfully transactions', () => {
       // Arrange
-      const date = new Date().toLocaleDateString();
       const expected = [
         { date: date, type: 'debit', amount: 500, balance: 500 },
         { date: date, type: 'credit', amount: 300, balance: 200 },
