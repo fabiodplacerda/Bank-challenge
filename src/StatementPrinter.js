@@ -12,15 +12,15 @@ export default class StatementPrinter {
     }
     console.log(StatementPrinter.headers());
     statements.reverse().forEach(statement => {
-      console.log(StatementPrinter.preparedStatementOutput(statement));
+      console.log(StatementPrinter.#preparedStatementOutput(statement));
     });
   };
 
   static headers = () => {
-    return 'date      ||    credit    ||     debit    || balance';
+    return 'date       ||    credit    ||     debit    || balance';
   };
 
-  static preparedStatementOutput = statement => {
+  static #preparedStatementOutput = statement => {
     const credit =
       statement.type === 'credit'
         ? statement.amount.toFixed(2).padStart(9)
