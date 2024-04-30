@@ -23,3 +23,9 @@ I want to be able to check my account statements\
 So that I see my account balance history
 
 ![User stories diagram 4](images/user-stories-diagram-4.png)
+
+As a user\
+I want the statements to be color-coded\
+So that I can easily distinguish between credits and debits.
+
+![User stories diagram 4](images/user-stories-diagram-4.png)
