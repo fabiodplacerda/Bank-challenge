@@ -11,7 +11,6 @@ describe('StatementPrint Tests: ', () => {
     consoleSpy.calls.reset();
   });
 
-  afterEach(() => {});
   it('should ensure that preparedStatementOutput calls console.log once for the headers and then once for each item in the given array', () => {
     // Arrange
     const array = [
