@@ -1,3 +1,5 @@
+import chalk from 'chalk';
+
 export default class StatementPrinter {
   constructor() {
     if (new.target === StatementPrinter) {
@@ -23,14 +25,16 @@ export default class StatementPrinter {
   static #preparedStatementOutput = statement => {
     const credit =
       statement.type === 'credit'
-        ? statement.amount.toFixed(2).padStart(9)
+        ? chalk.green(statement.amount.toFixed(2).padStart(9))
         : ' '.padStart(9);
     const debit =
       statement.type === 'debit'
-        ? statement.amount.toFixed(2).padStart(9)
+        ? chalk.red(statement.amount.toFixed(2).padStart(9))
         : ' '.padStart(9);
-    return `${
-      statement.date
-    } ||  ${credit}   ||  ${debit}   || ${statement.balance.toFixed(2)}`;
+    const balance =
+      statement.balance <= 0
+        ? chalk.red(statement.balance.toFixed(2))
+        : chalk.green(statement.balance.toFixed(2));
+    return `${statement.date} ||  ${credit}   ||  ${debit}   || ${balance}`;
   };
 }
