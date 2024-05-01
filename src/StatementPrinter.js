@@ -1,4 +1,4 @@
-import chalkWrapper from './chalkWrapper.js';
+import chalkWrapper from '../utils/chalkWrapper.js';
 
 export default class StatementPrinter {
   constructor() {

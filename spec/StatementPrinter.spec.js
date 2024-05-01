@@ -1,5 +1,5 @@
 import StatementPrinter from '../src/StatementPrinter.js';
-import chalkWrapper from '../src/chalkWrapper.js';
+import chalkWrapper from '../utils/chalkWrapper.js';
 
 describe('StatementPrint Tests: ', () => {
   let consoleSpy;
