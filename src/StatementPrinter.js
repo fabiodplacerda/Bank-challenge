@@ -1,4 +1,4 @@
-import chalk from 'chalk';
+import chalkWrapper from './chalkWrapper.js';
 
 export default class StatementPrinter {
   constructor() {
@@ -25,16 +25,16 @@ export default class StatementPrinter {
   static #preparedStatementOutput = statement => {
     const credit =
       statement.type === 'credit'
-        ? chalk.green(statement.amount.toFixed(2).padStart(9))
+        ? chalkWrapper.green(statement.amount.toFixed(2).padStart(9))
         : ' '.padStart(9);
     const debit =
       statement.type === 'debit'
-        ? chalk.red(statement.amount.toFixed(2).padStart(9))
+        ? chalkWrapper.red(statement.amount.toFixed(2).padStart(9))
         : ' '.padStart(9);
     const balance =
       statement.balance <= 0
-        ? chalk.red(statement.balance.toFixed(2))
-        : chalk.green(statement.balance.toFixed(2));
+        ? chalkWrapper.red(statement.balance.toFixed(2))
+        : chalkWrapper.green(statement.balance.toFixed(2));
     return `${statement.date} ||  ${credit}   ||  ${debit}   || ${balance}`;
   };
 }
