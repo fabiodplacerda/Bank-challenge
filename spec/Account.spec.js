@@ -230,9 +230,18 @@ describe('Account Class tests: ', () => {
 });
 
 describe('Account Class additional features tests: ', () => {
+  let testAccount;
+
+  beforeEach(() => {
+    testAccount = new Account();
+  });
+
+  afterEach(() => {
+    testAccount = null;
+  });
+
   it('should be able to turn on the overdraft facility', () => {
     // Arrange
-    const testAccount = new Account();
     const expected = true;
     // Act
     testAccount.overdraftFacilityToggler();
@@ -242,7 +251,6 @@ describe('Account Class additional features tests: ', () => {
 
   it('should be able to turn on the overdraft facility', () => {
     // Arrange
-    const testAccount = new Account();
     const expected = false;
     // Act
     testAccount.overdraftFacilityToggler();
@@ -253,7 +261,6 @@ describe('Account Class additional features tests: ', () => {
 
   it('should be able to receive feedback when turning on the overdraft', () => {
     // Arrange
-    const testAccount = new Account();
     const consoleSpy = spyOn(console, 'log');
     const expected = 'Overdraft facility was turned on!';
     // Act
@@ -264,13 +271,41 @@ describe('Account Class additional features tests: ', () => {
 
   it('should be able to receive feedback when turning on the overdraft', () => {
     // Arrange
-    const testAccount = new Account();
     const consoleSpy = spyOn(console, 'log');
     const expected = 'Overdraft facility was turned off!';
     // Act
     testAccount.overdraftFacilityToggler();
     testAccount.overdraftFacilityToggler();
 
+    // Assert
+    expect(consoleSpy).toHaveBeenCalledWith(expected);
+  });
+
+  it('should allow users to configure their overdraft facility', () => {
+    // Arrange
+    const expected = -250;
+    // Act
+    testAccount.overdraftFacilityToggler();
+    testAccount.configureOverdraftAmount(250);
+    // Assert
+    expect(testAccount.getOverdraftAllowedAmount()).toBe(expected);
+  });
+
+  it('should allow users to configure their overdraft facility only if they have overdraft facility enabled', () => {
+    // Arrange
+    const expected = 0;
+    // Act
+    testAccount.configureOverdraftAmount(250);
+    // Assert
+    expect(testAccount.getOverdraftAllowedAmount()).toBe(expected);
+  });
+
+  it('should send a feedback to users when they are trying to configure their overdraft amount but overdraft facility was not enable', () => {
+    // Arrange
+    const consoleSpy = spyOn(console, 'log');
+    const expected = 'Overdraft facility was not enable in this account!';
+    // Act
+    testAccount.configureOverdraftAmount(250);
     // Assert
     expect(consoleSpy).toHaveBeenCalledWith(expected);
   });

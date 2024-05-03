@@ -2,6 +2,7 @@ export default class Account {
   #balance;
   #statements = [];
   #overdraftFacility = false;
+  #overdraftAllowedAmount = 0;
 
   constructor(balance = 0) {
     this.#balance = balance;
@@ -66,5 +67,19 @@ export default class Account {
 
   hasOverdraftFacility = () => {
     return this.#overdraftFacility;
+  };
+
+  configureOverdraftAmount = amt => {
+    if (this.#overdraftFacility) {
+      this.#overdraftAllowedAmount = -Math.abs(amt);
+    } else {
+      this.#userActionFeedback(
+        'Overdraft facility was not enable in this account!'
+      );
+    }
+  };
+
+  getOverdraftAllowedAmount = () => {
+    return this.#overdraftAllowedAmount;
   };
 }
