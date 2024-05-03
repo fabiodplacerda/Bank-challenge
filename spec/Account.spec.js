@@ -228,3 +228,50 @@ describe('Account Class tests: ', () => {
     });
   });
 });
+
+describe('Account Class additional features tests: ', () => {
+  it('should be able to turn on the overdraft facility', () => {
+    // Arrange
+    const testAccount = new Account();
+    const expected = true;
+    // Act
+    testAccount.overdraftFacilityToggler();
+    // Assert
+    expect(testAccount.hasOverdraftFacility()).toBe(expected);
+  });
+
+  it('should be able to turn on the overdraft facility', () => {
+    // Arrange
+    const testAccount = new Account();
+    const expected = false;
+    // Act
+    testAccount.overdraftFacilityToggler();
+    testAccount.overdraftFacilityToggler();
+    // Assert
+    expect(testAccount.hasOverdraftFacility()).toBe(expected);
+  });
+
+  it('should be able to receive feedback when turning on the overdraft', () => {
+    // Arrange
+    const testAccount = new Account();
+    const consoleSpy = spyOn(console, 'log');
+    const expected = 'Overdraft facility was turned on!';
+    // Act
+    testAccount.overdraftFacilityToggler();
+    // Assert
+    expect(consoleSpy).toHaveBeenCalledWith(expected);
+  });
+
+  it('should be able to receive feedback when turning on the overdraft', () => {
+    // Arrange
+    const testAccount = new Account();
+    const consoleSpy = spyOn(console, 'log');
+    const expected = 'Overdraft facility was turned off!';
+    // Act
+    testAccount.overdraftFacilityToggler();
+    testAccount.overdraftFacilityToggler();
+
+    // Assert
+    expect(consoleSpy).toHaveBeenCalledWith(expected);
+  });
+});

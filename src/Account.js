@@ -1,6 +1,7 @@
 export default class Account {
   #balance;
   #statements = [];
+  #overdraftFacility = false;
 
   constructor(balance = 0) {
     this.#balance = balance;
@@ -52,5 +53,18 @@ export default class Account {
 
   #userActionFeedback = message => {
     console.log(message);
+  };
+
+  overdraftFacilityToggler = () => {
+    this.#overdraftFacility = !this.#overdraftFacility;
+    if (this.#overdraftFacility) {
+      this.#userActionFeedback('Overdraft facility was turned on!');
+    } else {
+      this.#userActionFeedback('Overdraft facility was turned off!');
+    }
+  };
+
+  hasOverdraftFacility = () => {
+    return this.#overdraftFacility;
   };
 }
