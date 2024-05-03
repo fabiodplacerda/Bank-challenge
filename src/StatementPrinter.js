@@ -27,10 +27,12 @@ export default class StatementPrinter {
       statement.type === 'credit'
         ? chalkWrapper.green(statement.amount.toFixed(2).padStart(9))
         : ' '.padStart(9);
+
     const debit =
       statement.type === 'debit'
         ? chalkWrapper.red(statement.amount.toFixed(2).padStart(9))
         : ' '.padStart(9);
+
     const balance =
       statement.balance <= 0
         ? chalkWrapper.red(statement.balance.toFixed(2))
