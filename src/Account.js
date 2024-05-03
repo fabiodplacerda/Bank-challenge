@@ -23,10 +23,27 @@ export default class Account {
   };
 
   withdrawFunds = amt => {
-    const validAmount = this.#checkWithdrawValidAmount(amt);
-    if (!validAmount && (typeof amt !== 'number' || amt < 0)) {
-      this.#userActionFeedback(`Invalid amount to withdraw`);
-    } else if (!validAmount) {
+    if (this.#overdraftFacility) {
+      this.#withdrawFundsOverdraft(amt);
+    } else {
+      const validAmount = this.#checkWithdrawValidAmount(amt);
+      if (!validAmount && (typeof amt !== 'number' || amt < 0)) {
+        this.#userActionFeedback(`Invalid amount to withdraw`);
+      } else if (!validAmount) {
+        this.#userActionFeedback(`Insufficient Funds`);
+      }
+    }
+  };
+
+  #withdrawFundsOverdraft = amt => {
+    const result = this.#balance - amt;
+    if (result >= this.#overdraftAllowedAmount) {
+      this.#balance = result;
+      this.#userActionFeedback(
+        `£${amt.toFixed(2)} has been withdrawn from your account`
+      );
+      this.#addStatement(amt, 'credit');
+    } else {
       this.#userActionFeedback(`Insufficient Funds`);
     }
   };
