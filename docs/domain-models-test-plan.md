@@ -37,9 +37,7 @@ So that I can control whether I can overdraw my account.
 ![Domain model for user stories nº5](images/user-stories-domain-model-5.png)
 
 As a user\
-I want to be able to add an overdraft facility to my account\
-So that I can make withdrawals that exceed my current balance up to the limit of the overdraft.
-
-As a user\
 I want to be able to configure the amount of my overdraft\
 So that I can choose how much I'm able to overdraw.
+
+![Domain model for user stories nº6](images/user-stories-domain-model-6.png)
