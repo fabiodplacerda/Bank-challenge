@@ -16,6 +16,7 @@ export default class StatementPrinter {
     statements.reverse().forEach(statement => {
       console.log(StatementPrinter.#preparedStatementOutput(statement));
     });
+    statements.reverse();
   };
 
   static headers = () => {
