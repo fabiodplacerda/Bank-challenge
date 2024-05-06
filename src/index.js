@@ -21,3 +21,24 @@ myAccount.withdrawFunds(1000);
 
 // Printing statements
 StatementPrinter.printStatements(myAccount.getStatements());
+
+//Overdraft feature
+
+myAccount.configureOverdraftAmount(250); // Will log a message saying overdraft facility wasn't enabled yet
+myAccount.overdraftFacilityToggler(); // Will turn on overdraft facility and log message
+
+myAccount.configureOverdraftAmount(500);
+myAccount.withdrawFunds(500);
+myAccount.overdraftFacilityToggler(); // Overdraft turned off
+myAccount.addFunds(1000);
+myAccount.withdrawFunds(1000); // Transaction won't be successful because overdraft facility is not on anymore
+
+myAccount.withdrawFunds(500);
+myAccount.overdraftFacilityToggler(); // Overdraft turned on
+myAccount.configureOverdraftAmount('1000'); // Invalid amount
+
+console.log(myAccount.getOverdraftAllowedAmount()); //Overdraft amount is reset when turned off
+myAccount.configureOverdraftAmount(1000);
+
+myAccount.withdrawFunds(1000);
+StatementPrinter.printStatements(myAccount.getStatements());
