@@ -78,6 +78,7 @@ export default class Account {
     if (this.#overdraftFacility) {
       this.#userActionFeedback('Overdraft facility was turned on!');
     } else {
+      this.#overdraftAllowedAmount = 0;
       this.#userActionFeedback('Overdraft facility was turned off!');
     }
   };
@@ -87,7 +88,7 @@ export default class Account {
   };
 
   configureOverdraftAmount = amt => {
-    if (this.#overdraftFacility) {
+    if (this.#overdraftFacility && typeof amt === 'number') {
       this.#overdraftAllowedAmount = -Math.abs(amt);
     } else {
       this.#userActionFeedback(
